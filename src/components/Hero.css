@@ -1,10 +1,29 @@
+/* ---------------------------------------------------------------------------
+   Pinned, scroll-scrubbed hero.
+
+   `.hero` is the tall scroll runway; `.hero__pin` sticks to the viewport while
+   the scroll progress of the runway is mapped onto the video's currentTime by
+   `useScrollScrub`. Nothing here animates on its own: the only motion comes
+   from the visitor's scroll.
+--------------------------------------------------------------------------- */
+
 .hero {
+  --hero-scrub: 220vh;
+  --hero-scrub: 220svh;
   position: relative;
+  height: calc(100vh + var(--hero-scrub));
+  height: calc(100svh + var(--hero-scrub));
+  background: var(--c-bg-alt);
+}
+
+.hero__pin {
+  position: sticky;
+  top: 0;
   display: flex;
   align-items: center;
-  min-height: min(88vh, 880px);
+  height: 100vh;
+  height: 100svh;
   overflow: hidden;
-  background: var(--c-bg-alt);
   isolation: isolate;
 }
 
@@ -12,14 +31,17 @@
   position: absolute;
   inset: 0;
   z-index: -2;
+  pointer-events: none;
 }
 
-.hero__media img {
+.hero__video,
+.hero__poster {
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 68% 45%;
-  animation: hero-zoom 16s ease-out both;
+  object-position: 66% 42%;
+  background: var(--c-bg-alt);
 }
 
 .hero__scrim {
@@ -38,6 +60,9 @@
 .hero__content {
   position: relative;
   padding-block: clamp(6rem, 12vh, 9rem);
+  /* A few pixels of drift across the whole sequence: enough to feel dimensional,
+     never enough to pull the eye away from the clip. */
+  transform: translate3d(0, calc(var(--hero-progress, 0) * -26px), 0);
 }
 
 .hero__title {
@@ -71,15 +96,6 @@
   animation: hero-rise 1.4s var(--ease) 0.32s both;
 }
 
-@keyframes hero-zoom {
-  from {
-    transform: scale(1.005);
-  }
-  to {
-    transform: scale(1.06);
-  }
-}
-
 @keyframes hero-rise {
   from {
     opacity: 0;
@@ -91,14 +107,40 @@
   }
 }
 
+/* Static hero: reduced motion, or the clip could not be loaded. */
+.hero.is-static {
+  height: auto;
+}
+
+.hero.is-static .hero__pin {
+  position: relative;
+  height: min(88vh, 880px);
+}
+
+.hero.is-static .hero__content {
+  transform: none;
+}
+
+@media (max-width: 1100px) {
+  .hero {
+    --hero-scrub: 200vh;
+    --hero-scrub: 200svh;
+  }
+}
+
 @media (max-width: 900px) {
   .hero {
-    align-items: flex-end;
-    min-height: min(86vh, 720px);
+    --hero-scrub: 190vh;
+    --hero-scrub: 190svh;
   }
 
-  .hero__media img {
-    object-position: 64% 32%;
+  .hero__pin {
+    align-items: flex-end;
+  }
+
+  .hero__video,
+  .hero__poster {
+    object-position: 62% 32%;
   }
 
   .hero__scrim {
@@ -118,11 +160,20 @@
   .hero__title {
     max-width: 14ch;
   }
+
+  .hero.is-static .hero__pin {
+    height: min(86vh, 720px);
+  }
 }
 
 @media (max-width: 560px) {
   .hero {
-    min-height: min(84svh, 640px);
+    --hero-scrub: 170vh;
+    --hero-scrub: 170svh;
+  }
+
+  .hero.is-static .hero__pin {
+    height: min(84svh, 640px);
   }
 
   .hero__subtitle {
@@ -132,7 +183,22 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero__media img,
+  .hero,
+  .hero.is-static {
+    height: auto;
+  }
+
+  .hero__pin,
+  .hero.is-static .hero__pin {
+    position: relative;
+    height: min(88vh, 880px);
+  }
+
+  .hero__content,
+  .hero.is-static .hero__content {
+    transform: none;
+  }
+
   .hero__title,
   .hero__subtitle,
   .hero__cta {

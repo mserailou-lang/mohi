@@ -40,6 +40,21 @@ Photography lives in `public/images/` as two sizes per picture (`hero-900/1600`,
 the `alt` text in the components if the subject changes. The current photographs are from Unsplash
 and are placeholders.
 
+## Hero video
+
+The hero is pinned and scrubbed by scroll, not autoplayed: `src/hooks/useScrollScrub.js` maps the
+scroll progress of the hero runway onto `video.currentTime`, one frame at a time. The clip lives at
+`public/videos/hero-scrub.mp4` and its first frame at `public/images/hero-poster.jpg`.
+
+`hero-scrub.mp4` is the supplied footage re-encoded with **a keyframe on every frame** (`-g 1`), at
+the original resolution and frame rate, because the source had a single keyframe for the whole clip
+and browsers could not seek it smoothly. If you replace the video, encode it the same way — H.264,
+yuv420p, `-g 1 -sc_threshold 0`, `-movflags +faststart`, no audio — and export the poster from the
+first frame. A short clip (5–10 s) at 1440–1920 px wide scrubs best; very long or very heavy files
+will stutter.
+
+Visitors with `prefers-reduced-motion: reduce` get the poster frame and normal scrolling instead.
+
 ## Contact form
 
 `POST /api/contact` validates `name`, `email`, `subject` and `message` (required, length limits,
@@ -53,5 +68,5 @@ practice wants messages in an inbox.
 ## Accessibility & motion
 
 Skip link, semantic landmarks, labelled form fields, visible focus rings, `aria-live` carousel
-announcements, and `prefers-reduced-motion` support that removes the hero zoom, scroll reveals and
-carousel autoplay.
+announcements, and `prefers-reduced-motion` support that turns the hero into a static frame and removes
+scroll reveals and carousel autoplay.
