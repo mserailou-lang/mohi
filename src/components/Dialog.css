@@ -1,0 +1,173 @@
+.dialog {
+  width: min(92vw, 42rem);
+  max-width: none;
+  max-height: 88vh;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--c-ink);
+}
+
+.dialog::backdrop {
+  background: rgba(74, 59, 55, 0.42);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+}
+
+.dialog__panel {
+  position: relative;
+  max-height: 88vh;
+  overflow-y: auto;
+  padding: clamp(2.25rem, 5vw, 3.5rem);
+  background: var(--c-white);
+  border: 1px solid var(--c-border);
+  box-shadow: 0 40px 80px -60px rgba(74, 59, 55, 0.8);
+}
+
+.dialog__close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: grid;
+  place-items: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 50%;
+  color: var(--c-ink);
+  transition: background 0.35s var(--ease), color 0.35s var(--ease);
+}
+
+.dialog__close svg {
+  width: 1.05rem;
+  height: 1.05rem;
+}
+
+.dialog__close:hover,
+.dialog__close:focus-visible {
+  background: var(--c-bg);
+  color: var(--c-rose-deep);
+}
+
+.dialog__title {
+  margin-bottom: 1.5rem;
+  padding-right: 2.5rem;
+  font-size: clamp(1.9rem, 3.4vw, 2.5rem);
+  font-style: italic;
+  font-weight: 300;
+  line-height: 1.1;
+}
+
+.dialog__body p {
+  font-size: 0.98rem;
+  line-height: 1.8;
+  color: var(--c-ink);
+}
+
+.dialog__intro {
+  margin-bottom: 2rem;
+  color: var(--c-ink-muted) !important;
+}
+
+.dialog__list {
+  margin: 1.5rem 0 0;
+  border-top: 1px solid var(--c-border);
+}
+
+.dialog__list li {
+  position: relative;
+  padding: 0.7rem 0 0.7rem 1.2rem;
+  border-bottom: 1px solid var(--c-border);
+  font-size: 0.92rem;
+  line-height: 1.7;
+  color: var(--c-ink);
+}
+
+.dialog__list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 1.35rem;
+  width: 0.35rem;
+  height: 0.35rem;
+  border-radius: 50%;
+  background: var(--c-accent);
+}
+
+.dialog__cta {
+  margin-top: 2rem;
+}
+
+.dialog__services > section + section {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--c-border);
+}
+
+.dialog__services h3 {
+  margin-bottom: 0.6rem;
+  font-size: 1.4rem;
+  font-weight: 400;
+}
+
+.dialog__journal {
+  margin-top: 0.5rem;
+}
+
+.dialog__entry {
+  border-top: 1px solid var(--c-border);
+}
+
+.dialog__entry:last-child {
+  border-bottom: 1px solid var(--c-border);
+}
+
+.dialog__entry summary {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1.15rem 0;
+  cursor: pointer;
+  list-style: none;
+  transition: color 0.35s var(--ease);
+}
+
+.dialog__entry summary::-webkit-details-marker {
+  display: none;
+}
+
+.dialog__entry summary:hover {
+  color: var(--c-rose-deep);
+}
+
+.dialog__entry-title {
+  font-family: var(--font-serif);
+  font-size: 1.3rem;
+  line-height: 1.3;
+}
+
+.dialog__entry-date {
+  flex: none;
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--c-ink-soft);
+}
+
+.dialog__entry-body {
+  padding-bottom: 1.4rem;
+  font-size: 0.94rem;
+  line-height: 1.8;
+  color: var(--c-ink-muted);
+}
+
+@media (max-width: 560px) {
+  .dialog__panel {
+    padding: 2.25rem 1.5rem;
+  }
+
+  .dialog__entry summary {
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+}

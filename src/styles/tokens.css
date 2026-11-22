@@ -1,0 +1,52 @@
+@font-face {
+  font-family: 'Cormorant Garamond';
+  src: url('/fonts/cormorant-normal.woff2') format('woff2');
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Cormorant Garamond';
+  src: url('/fonts/cormorant-italic.woff2') format('woff2');
+  font-weight: 300 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/inter.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* Palette */
+  --c-bg: #fce9e6;
+  --c-bg-alt: #fff7f4;
+  --c-pink-soft: #f7d9d5;
+  --c-salmon: #eabbb2;
+  --c-white: #fffdfc;
+  --c-ink: #65504b;
+  --c-ink-muted: #7a625c;
+  --c-ink-soft: #9b817b;
+  --c-accent: #c78e85;
+  --c-rose-deep: #a9706a;
+  --c-border: #ead7d2;
+  --c-on-salmon: #4a3b37;
+
+  /* Type */
+  --font-serif: 'Cormorant Garamond', 'Playfair Display', 'Lora', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Inter', 'Lato', 'Montserrat', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* Layout */
+  --max-w: 1280px;
+  --pad-x: clamp(1.25rem, 5vw, 4.5rem);
+  --section-y: clamp(4.25rem, 9vw, 8.5rem);
+  --header-h: 4.5rem;
+
+  /* Motion */
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+}

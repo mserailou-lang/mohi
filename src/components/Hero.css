@@ -1,0 +1,207 @@
+/* ---------------------------------------------------------------------------
+   Pinned, scroll-scrubbed hero.
+
+   `.hero` is the tall scroll runway; `.hero__pin` sticks to the viewport while
+   the scroll progress of the runway is mapped onto the video's currentTime by
+   `useScrollScrub`. Nothing here animates on its own: the only motion comes
+   from the visitor's scroll.
+--------------------------------------------------------------------------- */
+
+.hero {
+  --hero-scrub: 220vh;
+  --hero-scrub: 220svh;
+  position: relative;
+  height: calc(100vh + var(--hero-scrub));
+  height: calc(100svh + var(--hero-scrub));
+  background: var(--c-bg-alt);
+}
+
+.hero__pin {
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: center;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.hero__media {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+}
+
+.hero__video,
+.hero__poster {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 66% 42%;
+  background: var(--c-bg-alt);
+}
+
+.hero__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 247, 244, 0.95) 0%,
+    rgba(255, 247, 244, 0.84) 24%,
+    rgba(255, 247, 244, 0.4) 46%,
+    rgba(255, 247, 244, 0) 66%
+  );
+}
+
+.hero__content {
+  position: relative;
+  padding-block: clamp(6rem, 12vh, 9rem);
+  /* A few pixels of drift across the whole sequence: enough to feel dimensional,
+     never enough to pull the eye away from the clip. */
+  transform: translate3d(0, calc(var(--hero-progress, 0) * -26px), 0);
+}
+
+.hero__title {
+  max-width: 12ch;
+  font-size: clamp(3rem, 7.2vw, 5.9rem);
+  font-weight: 300;
+  letter-spacing: 0.008em;
+  line-height: 0.98;
+  color: var(--c-rose-deep);
+  animation: hero-rise 1.4s var(--ease) both;
+}
+
+.hero__amp {
+  font-style: italic;
+  font-weight: 300;
+}
+
+.hero__subtitle {
+  margin: clamp(1.35rem, 2.4vw, 2rem) 0 0;
+  font-size: 0.74rem;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  line-height: 1.9;
+  text-transform: uppercase;
+  color: var(--c-ink);
+  animation: hero-rise 1.4s var(--ease) 0.18s both;
+}
+
+.hero__cta {
+  margin-top: clamp(1.9rem, 3.4vw, 2.75rem);
+  animation: hero-rise 1.4s var(--ease) 0.32s both;
+}
+
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Static hero: reduced motion, or the clip could not be loaded. */
+.hero.is-static {
+  height: auto;
+}
+
+.hero.is-static .hero__pin {
+  position: relative;
+  height: min(88vh, 880px);
+}
+
+.hero.is-static .hero__content {
+  transform: none;
+}
+
+@media (max-width: 1100px) {
+  .hero {
+    --hero-scrub: 200vh;
+    --hero-scrub: 200svh;
+  }
+}
+
+@media (max-width: 900px) {
+  .hero {
+    --hero-scrub: 190vh;
+    --hero-scrub: 190svh;
+  }
+
+  .hero__pin {
+    align-items: flex-end;
+  }
+
+  .hero__video,
+  .hero__poster {
+    object-position: 62% 32%;
+  }
+
+  .hero__scrim {
+    background: linear-gradient(
+      0deg,
+      rgba(255, 247, 244, 0.97) 0%,
+      rgba(255, 247, 244, 0.92) 24%,
+      rgba(255, 247, 244, 0.4) 54%,
+      rgba(255, 247, 244, 0) 78%
+    );
+  }
+
+  .hero__content {
+    padding-block: 0 clamp(2.5rem, 8vw, 4rem);
+  }
+
+  .hero__title {
+    max-width: 14ch;
+  }
+
+  .hero.is-static .hero__pin {
+    height: min(86vh, 720px);
+  }
+}
+
+@media (max-width: 560px) {
+  .hero {
+    --hero-scrub: 170vh;
+    --hero-scrub: 170svh;
+  }
+
+  .hero.is-static .hero__pin {
+    height: min(84svh, 640px);
+  }
+
+  .hero__subtitle {
+    font-size: 0.68rem;
+    letter-spacing: 0.22em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero,
+  .hero.is-static {
+    height: auto;
+  }
+
+  .hero__pin,
+  .hero.is-static .hero__pin {
+    position: relative;
+    height: min(88vh, 880px);
+  }
+
+  .hero__content,
+  .hero.is-static .hero__content {
+    transform: none;
+  }
+
+  .hero__title,
+  .hero__subtitle,
+  .hero__cta {
+    animation: none;
+  }
+}
